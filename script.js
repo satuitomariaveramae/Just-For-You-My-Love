@@ -944,7 +944,7 @@ function spawnReasonsPetals() {
 (function initReplySection() {
   const EMAILJS_PUBLIC_KEY  = "Hyv5BeH0TmRT7QXOK";
   const EMAILJS_SERVICE_ID  = "service_qax436r";
-  const EMAILJS_TEMPLATE_ID = "template_zemcvpr";
+  const EMAILJS_TEMPLATE_ID = "template_qtjrhgj";
 
   // Init EmailJS
   if (window.emailjs) {
@@ -987,14 +987,26 @@ function spawnReasonsPetals() {
 
       try {
         await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-          from_name: "Aaron Ermino",
-          to_email:  "satuitomariaveramae@gmail.com",
-          message:   msg,
+          message: msg,
         });
 
-        // Show success, hide form
+        // Show success, hide form + prompt
+        const replyPrompt = document.getElementById("replyPrompt");
         document.querySelector(".reply-card").classList.add("hidden");
+        if (replyPrompt) replyPrompt.classList.add("hidden");
         successEl.classList.remove("hidden");
+
+        // After 4 seconds, reset and show form + prompt again
+        setTimeout(() => {
+          successEl.classList.add("hidden");
+          textarea.value = "";
+          charCount.textContent = "0 / 2000";
+          sendBtn.disabled = false;
+          sendLabel.textContent = "Send 💌";
+          document.querySelector(".reply-card").classList.remove("hidden");
+          if (replyPrompt) replyPrompt.classList.remove("hidden");
+        }, 4000);
+
       } catch (err) {
         console.error("EmailJS error:", err);
         sendBtn.disabled = false;
