@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Just For You, My Love</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ===== LOCK SCREEN ===== -->
+  <div id="lockScreen" class="lock-overlay">
+    <!-- Background photo — untouched -->
+    <div class="lock-bg" style="background-image:url('images/you.jpg')"></div>
+    <!-- Soft dark overlay for readability -->
+    <div class="lock-bg-overlay"></div>
+    <!-- Ambient floating hearts -->
+    <div id="floatingHeartsLock" class="floating-hearts-lock"></div>
+    <!-- Sparkles -->
+    <div id="sparklesLock" class="sparkles-container"></div>
+
+    <div class="lock-content">
+
+      <!-- Title -->
+      <div class="lock-greeting phase-greeting">
+        <h1 class="lock-title">Happy 1st Anniversary, My Love!</h1>
+        <p class="lock-sub">Enter our special date to unlock</p>
+      </div>
+
+      <!-- Glassmorphism PIN card -->
+      <div class="lock-card phase-keypad" id="lockCard">
+
+        <!-- 6 heart PIN slots -->
+        <div class="pin-slots" id="pinSlots">
+          <div class="pin-slot" data-idx="0">
+            <span class="pin-heart">♥</span>
+            <span class="pin-digit"></span>
+          </div>
+          <div class="pin-slot" data-idx="1">
+            <span class="pin-heart">♥</span>
+            <span class="pin-digit"></span>
+          </div>
+          <div class="pin-slot" data-idx="2">
+            <span class="pin-heart">♥</span>
+            <span class="pin-digit"></span>
+          </div>
+          <div class="pin-slot" data-idx="3">
+            <span class="pin-heart">♥</span>
+            <span class="pin-digit"></span>
+          </div>
+          <div class="pin-slot" data-idx="4">
+            <span class="pin-heart">♥</span>
+            <span class="pin-digit"></span>
+          </div>
+          <div class="pin-slot" data-idx="5">
+            <span class="pin-heart">♥</span>
+            <span class="pin-digit"></span>
+          </div>
+        </div>
+
+        <p id="lockError" class="lock-error hidden">Wrong date, try again my love</p>
+
+        <!-- Keypad -->
+        <div class="keypad-grid">
+          <button class="heart-key" data-val="1"><span class="num">1</span></button>
+          <button class="heart-key" data-val="2"><span class="num">2</span></button>
+          <button class="heart-key" data-val="3"><span class="num">3</span></button>
+          <button class="heart-key" data-val="4"><span class="num">4</span></button>
+          <button class="heart-key" data-val="5"><span class="num">5</span></button>
+          <button class="heart-key" data-val="6"><span class="num">6</span></button>
+          <button class="heart-key" data-val="7"><span class="num">7</span></button>
+          <button class="heart-key" data-val="8"><span class="num">8</span></button>
+          <button class="heart-key" data-val="9"><span class="num">9</span></button>
+          <div class="keypad-empty"></div>
+          <button class="heart-key" data-val="0"><span class="num">0</span></button>
+          <div class="keypad-empty"></div>
+        </div>
+
+        <!-- Hidden input for JS compatibility -->
+        <input type="hidden" id="codeInput" />
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== COUNTDOWN SCREEN ===== -->
+  <div id="countdownScreen" class="fullscreen-overlay hidden">
+    <div class="fullscreen-bg"></div>
+    <div id="floatingHeartsCountdown" class="floating-hearts-lock"></div>
+    <div class="countdown-content">
+      <p class="countdown-sup">We've been together for</p>
+      <h2 class="countdown-heading">Every Moment Counts</h2>
+      <div class="countdown-divider">
+        <span class="divider-line"></span>❤️<span class="divider-line"></span>
+      </div>
+      <div class="counter-grid">
+        <div class="counter-card"><span class="counter-val" id="cDays">00</span><span class="counter-lbl">Days</span></div>
+        <div class="counter-card"><span class="counter-val" id="cHours">00</span><span class="counter-lbl">Hours</span></div>
+        <div class="counter-card"><span class="counter-val" id="cMinutes">00</span><span class="counter-lbl">Minutes</span></div>
+        <div class="counter-card"><span class="counter-val" id="cSeconds">00</span><span class="counter-lbl">Seconds</span></div>
+      </div>
+      <p class="counter-caption" id="countdownCaption" style="opacity:0;">…and counting, forever with you.</p>
+    </div>
+  </div>
+
+  <!-- ===== MENU SCREEN ===== -->
+  <div id="menuScreen" class="fullscreen-overlay hidden">
+    <div class="fullscreen-bg"></div>
+    <div id="floatingHeartsMenu" class="floating-hearts-lock"></div>
+    <div class="menu-screen-content">
+      <p class="menu-screen-title">Happy 1st Anniversary</p>
+      <p class="menu-prompt">Where do you want to go?</p>
+      <div class="menu-grid">
+        <button class="menu-card" data-target="panel-timeline">
+          <img class="menu-icon menu-icon-img" src="images/book.jpg" alt="Our Story" />
+          <span class="menu-label">Our Story</span>
+        </button>
+        <button class="menu-card" data-target="panel-album">
+          <img class="menu-icon menu-icon-img" src="images/photos.png" alt="Our Photos" />
+          <span class="menu-label">Our Photos</span>
+        </button>
+        <button class="menu-card" data-target="panel-letter">
+          <img class="menu-icon menu-icon-img" src="images/letter.jpg" alt="My Letter" />
+          <span class="menu-label">My Letter</span>
+        </button>
+        <button class="menu-card" data-target="panel-reasons">
+          <img class="menu-icon menu-icon-img" src="images/heart.jpg" alt="Why I Love You" />
+          <span class="menu-label">Why I Love You</span>
+        </button>
+        <button class="menu-card menu-card--wide" data-target="panel-future">
+          <img class="menu-icon menu-icon-img" src="images/future.jpg" alt="A Future With You" />
+          <span class="menu-label">A Future With You</span>
+        </button>
+      </div>
+
+      <!-- SURPRISE SECTION -->
+      <div class="menu-surprise">
+        <p class="menu-surprise-sub"></p>
+        <h2 class="menu-surprise-title">A Surprise For You</h2>
+        <div class="menu-surprise-divider"><span class="divider-line"></span>❤️<span class="divider-line"></span></div>
+        <button class="menu-surprise-btn" id="surpriseBtn">
+          &nbsp;Tap to reveal something special&nbsp;
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MAIN SITE (Hero only) ===== -->
+  <div id="mainSite" class="hidden main-site">
+    <!-- Floating hearts & sparkles -->
+    <div id="floatingHearts" class="floating-hearts"></div>
+    <div id="sparkles" class="sparkles-container"></div>
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="hero-bg" style="background-image:url('images/pic.jpg')"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content" id="heroContent">
+        <p class="hero-dates">June 13, 2025 — June 13, 2026</p>
+        <h1 class="hero-title">Happy 1st Anniversary</h1>
+        <p class="hero-sub">To the one who made this year the best of my life 💖</p>
+        <button class="tap-ring-btn" id="tapBeginBtn" aria-label="Tap to Begin">
+          <span class="tap-ring-ripple"></span>
+          <span class="tap-ring-ripple tap-ring-ripple--delay"></span>
+          <span class="tap-ring-inner">♥</span>
+          <span class="tap-ring-label">Tap to Begin</span>
+        </button>
+      </div>
+    </section>
+
+  </div>
+  <!-- ===== SECTION PANELS (full-screen overlays) ===== -->
+  <div id="panelsContainer">
+    <div id="panel-timeline" class="section-panel hidden">
+    <section class="section timeline-section" id="timeline">
+      <div class="container">
+        <div class="section-title">
+          <p class="section-sub">How it all began</p>
+          <h2 class="section-heading">Our Love Story</h2>
+          <div class="title-divider"><span class="divider-line"></span>❤️<span class="divider-line"></span></div>
+        </div>
+        <div class="timeline">
+          <div class="timeline-line"></div>
+          <div class="timeline-item reveal" data-side="left">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <p class="timeline-date">June 13, 2025</p>
+              <h3 class="timeline-title">The Beginning</h3>
+              <p class="timeline-desc"> The day I said yes, not knowing that one little word would bring so much happiness, love, and unforgettable memories into my life.</p>
+            </div>
+          </div>
+          <div class="timeline-item reveal" data-side="right">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <p class="timeline-date">July 24, 2025</p>
+              <h3 class="timeline-title">Our First Arcade Date</h3>
+              <p class="timeline-desc">We played games, shared laughs, and somewhere between winning tickets and stealing glances, I started falling for you.</p>
+            </div>
+          </div>
+          <div class="timeline-item reveal" data-side="left">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <p class="timeline-date">August 2025</p>
+              <h3 class="timeline-title">Before I Realized It</h3>
+              <p class="timeline-desc">There wasn't a single moment when it happened. Little by little, you became the person I wanted to share every good day and every bad day with.</p>
+            </div>
+          </div>
+          <div class="timeline-item reveal" data-side="right">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <p class="timeline-date">September 13, 2025</p>
+              <h3 class="timeline-title">Our Third Monthsary</h3>
+              <p class="timeline-desc">We spent our monthsary at Embarcadero, sharing pizza, stories, and time together. The earrings you gave me may have been lost, but the love and memories behind them are something I'll always keep.</p>
+            </div>
+          </div>  
+          <div class="timeline-item reveal" data-side="left">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <p class="timeline-date">October 8, 2025</p>
+              <h3 class="timeline-title">A Surprise I’ll Always Remember</h3>
+              <p class="timeline-desc">This became one of my favorite days because it was the first time you gave me flowers. 
+                The flower was just inside a Jollibee paper, which made it even more unexpected and special. 
+                Now I understand why you kept asking me to record a video… it was all part of your surprise.</p>
+            </div>
+          </div>      
+          <div class="timeline-item reveal" data-side="right">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <p class="timeline-date">November 22, 2025</p>
+              <h3 class="timeline-title">That Unexpected Night Together</h3>
+              <p class="timeline-desc"> This is a day I will never forget—the first time you stayed overnight at our house because you weren’t feeling well. 
+               You were also finding little ways just to be with me, hahahaha. </p>
+            </div>
+          </div>    
+          <div class="timeline-item reveal" data-side="left">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <p class="timeline-date">December 2025</p>
+              <h3 class="timeline-title">Our First Holiday</h3>
+              <p class="timeline-desc">Even though we weren't together, every message and call made me feel close to you.</p>
+            </div>
+          </div>
+          <div class="timeline-item reveal" data-side="right">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <p class="timeline-date">January 3, 2026</p>
+              <h3 class="timeline-title">One of My Favorite Days</h3>
+              <p class="timeline-desc">One of my favorite days with you and Verna. We went to Kawa-Kawa and made a lot of memories together.</p>
+            </div>
+          </div>
+           <div class="timeline-item reveal" data-side="left">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <p class="timeline-date">February 15, 2026</p>
+              <h3 class="timeline-title">A Memorable First Meeting</h3>
+              <p class="timeline-desc">  On this day, I met your lola and some of your relatives for the first time. 
+                It was a meaningful moment for me because I felt welcomed and comfortable with them. 
+                In that simple day, I started to feel like I was really becoming part of your family.</p>
+            </div>
+          </div>   
+          <div class="timeline-item reveal" data-side="right">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <p class="timeline-date">March 20, 2026</p>
+              <h3 class="timeline-title">Your Graduation Day</h3>
+              <p class="timeline-desc">  This was your special day, your graduation day. I was really happy to be with you on such an important moment in your life. 
+                Seeing you finally graduate and receive your diploma made me feel so proud and genuinely happy for you. 
+                I was also really happy because it was my first time staying overnight at your place, and we truly made the most of the day together. 
+                It was a day full of joy, celebration, and memories I’ll always keep.</p>
+            </div>
+          </div> 
+          <div class="timeline-item reveal" data-side="Left">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <p class="timeline-date">March 29, 2026</p>
+              <h3 class="timeline-title">Our First Waterfall Adventure</h3>
+              <p class="timeline-desc"> This day was really special, our first trip to the falls in Malilipot, Albay. I was so happy to experience it with you. 
+                It felt refreshing and peaceful, and being there together made it even more meaningful. 
+                It’s one of those simple moments that I’ll always look back on with a smile.</p>
+            </div>
+          </div>      
+          <div class="timeline-item reveal" data-side="right">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <p class="timeline-date">April 9, 2026</p>
+              <h3 class="timeline-title">The Day Before You Left</h3>
+              <p class="timeline-desc">   This was the day you were about to leave. We weren’t okay at first, but I didn’t want you to leave without seeing each other and saying goodbye. 
+                  I even got annoyed when you were returning my clothes to me haha nakakainis ka sarap mo sampalin that time. 
+                  But in the end, we made up right away, and I was just glad we were okay before you left.</p>
+            </div>
+          </div>      
+          <div class="timeline-item reveal" data-side="left">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <p class="timeline-date">May 2026</p>
+              <h3 class="timeline-title">A Difficult Month for Us</h3>
+              <p class="timeline-desc"> This month tested us in many ways. We had a lot of arguments, misunderstandings, and moments where we said things we didn’t mean. 
+                There were also difficult decisions and heavy situations that we had to face together, along with sacrifices that weren’t easy for both of us. 
+                It was a painful and challenging time, but despite everything, we still found ways to try and hold on to each other.</p>
+            </div>
+          </div>    
+          <div class="timeline-item reveal" data-side="right">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <p class="timeline-date">June 13, 2026</p>
+              <h3 class="timeline-title">One Whole Year</h3>
+              <p class="timeline-desc">365 days of choosing each other every single morning. A whole year of memories, laughter, fights, and everything in between that made us stronger. 
+                And I wouldn’t trade any of it for anything.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="panel-back-wrap" id="back-timeline"><button class="panel-back-btn" data-back="true">← Back to Menu</button></div>
+
+    <!-- PHOTO ALBUM -->
+    </div><!-- /panel-timeline -->
+    <div id="panel-album" class="section-panel hidden">
+    <section class="section gallery-section album-section" id="gallery">
+      <!-- Hidden audio element -->
+      <audio id="albumAudio" loop preload="none">
+        <!-- Place your audio file at audio/song.mp3, or update the src below -->
+        <source src="audio/song.mp3" type="audio/mpeg" />
+      </audio>
+
+      <div class="container">
+        <div class="section-title">
+          <p class="section-sub">Captured moments</p>
+          <h2 class="section-heading">Our Photo Album</h2>
+          <div class="title-divider"><span class="divider-line"></span>❤️<span class="divider-line"></span></div>
+        </div>
+
+        <!-- Album wrapper -->
+        <div class="album-wrapper">
+
+          <!-- Mute button -->
+          <button class="album-mute-btn hidden" id="albumMuteBtn" aria-label="Toggle music">
+            <span id="albumMuteIcon">🔊</span>
+          </button>
+
+          <!-- Autoplay fallback -->
+          <button class="album-play-fallback hidden" id="albumPlayFallback">
+            Tap to Play Music ❤️
+          </button>
+
+          <!-- Photo counter -->
+          <div class="album-counter" id="albumCounter">1 / 30</div>
+
+          <!-- Swipe hint (first photo only) -->
+          <div class="album-hint" id="albumHint">← Swipe to relive our memories ❤️ →</div>
+
+          <!-- Card track -->
+          <div class="album-track" id="albumTrack">
+
+            <!-- Photo 1 — surprise message overlay -->
+            <div class="album-card active" data-index="0">
+              <div class="polaroid-album">
+                <img src="images/photo 1.jpg" alt="Photo 1" loading="lazy" />
+                <div class="album-first-overlay">
+                  <p>Swipe to relive our memories ❤️</p>
+                </div>
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="1">
+              <div class="polaroid-album">
+                <img src="images/photo 2.jpg" alt="Photo 2" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="2">
+              <div class="polaroid-album">
+                <img src="images/photo 3.jpg" alt="Photo 3" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="3">
+              <div class="polaroid-album">
+                <img src="images/photo 4.jpg" alt="Photo 4" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="4">
+              <div class="polaroid-album">
+                <img src="images/photo 5.jpg" alt="Photo 5" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="5">
+              <div class="polaroid-album">
+                <img src="images/photo 6.jpg" alt="Photo 6" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="6">
+              <div class="polaroid-album">
+                <img src="images/photo 7.jpg" alt="Photo 7" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="7">
+              <div class="polaroid-album">
+                <img src="images/photo 8.jpg" alt="Photo 8" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="8">
+              <div class="polaroid-album">
+                <img src="images/photo 9.jpg" alt="Photo 9" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="9">
+              <div class="polaroid-album">
+                <img src="images/photo 10.jpg" alt="Photo 10" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="10">
+              <div class="polaroid-album">
+                <img src="images/photo 11.jpg" alt="Photo 11" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="11">
+              <div class="polaroid-album">
+                <img src="images/photo 12.jpg" alt="Photo 12" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="12">
+              <div class="polaroid-album">
+                <img src="images/photo 13.jpg" alt="Photo 13" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="13">
+              <div class="polaroid-album">
+                <img src="images/photo 14.jpg" alt="Photo 14" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="14">
+              <div class="polaroid-album">
+                <img src="images/photo 15.jpg" alt="Photo 15" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="15">
+              <div class="polaroid-album">
+                <img src="images/photo 16.jpg" alt="Photo 16" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="16">
+              <div class="polaroid-album">
+                <img src="images/photo 17.jpg" alt="Photo 17" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="17">
+              <div class="polaroid-album">
+                <img src="images/photo 18.jpg" alt="Photo 18" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="18">
+              <div class="polaroid-album">
+                <img src="images/photo 19.jpg" alt="Photo 19" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="19">
+              <div class="polaroid-album">
+                <img src="images/photo 20.jpg" alt="Photo 20" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="20">
+              <div class="polaroid-album">
+                <img src="images/photo 21.jpg" alt="Photo 21" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="21">
+              <div class="polaroid-album">
+                <img src="images/photo 22.jpg" alt="Photo 22" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="22">
+              <div class="polaroid-album">
+                <img src="images/photo 23.jpg" alt="Photo 23" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="23">
+              <div class="polaroid-album">
+                <img src="images/photo 24.jpg" alt="Photo 24" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="24">
+              <div class="polaroid-album">
+                <img src="images/photo 25.jpg" alt="Photo 25" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="25">
+              <div class="polaroid-album">
+                <img src="images/photo 26.jpg" alt="Photo 26" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="26">
+              <div class="polaroid-album">
+                <img src="images/photo 27.jpg" alt="Photo 27" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="27">
+              <div class="polaroid-album">
+                <img src="images/photo 28.jpg" alt="Photo 28" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="28">
+              <div class="polaroid-album">
+                <img src="images/photo 29.jpg" alt="Photo 29" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="29">
+              <div class="polaroid-album">
+                <img src="images/photo 30.jpg" alt="Photo 30" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="30">
+              <div class="polaroid-album">
+                <img src="images/photo 31.jpg" alt="Photo 31" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="31">
+              <div class="polaroid-album">
+                <img src="images/photo 32.jpg" alt="Photo 32" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="32">
+              <div class="polaroid-album">
+                <img src="images/photo 33.jpg" alt="Photo 33" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="33">
+              <div class="polaroid-album">
+                <img src="images/photo 34.jpg" alt="Photo 34" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="34">
+              <div class="polaroid-album">
+                <img src="images/photo 35.jpg" alt="Photo 35" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="35">
+              <div class="polaroid-album">
+                <img src="images/photo 36.jpg" alt="Photo 36" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="36">
+              <div class="polaroid-album">
+                <img src="images/photo 37.jpg" alt="Photo 37" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="37">
+              <div class="polaroid-album">
+                <img src="images/photo 38.jpg" alt="Photo 38" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="38">
+              <div class="polaroid-album">
+                <img src="images/photo 39.jpg" alt="Photo 39" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="39">
+              <div class="polaroid-album">
+                <img src="images/photo 40.jpg" alt="Photo 40" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="40">
+              <div class="polaroid-album">
+                <img src="images/photo 41.jpg" alt="Photo 41" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="41">
+              <div class="polaroid-album">
+                <img src="images/photo 42.jpg" alt="Photo 42" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="42">
+              <div class="polaroid-album">
+                <img src="images/photo 43.jpg" alt="Photo 43" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="43">
+              <div class="polaroid-album">
+                <img src="images/photo 44.jpg" alt="Photo 44" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="44">
+              <div class="polaroid-album">
+                <img src="images/photo 45.jpg" alt="Photo 45" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="45">
+              <div class="polaroid-album">
+                <img src="images/photo 46.jpg" alt="Photo 46" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="46">
+              <div class="polaroid-album">
+                <img src="images/photo 47.jpg" alt="Photo 47" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="47">
+              <div class="polaroid-album">
+                <img src="images/photo 48.jpg" alt="Photo 48" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="48">
+              <div class="polaroid-album">
+                <img src="images/photo 49.jpg" alt="Photo 49" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="49">
+              <div class="polaroid-album">
+                <img src="images/photo 50.jpg" alt="Photo 50" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="50">
+              <div class="polaroid-album">
+                <img src="images/photo 51.jpg" alt="Photo 51" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="51">
+              <div class="polaroid-album">
+                <img src="images/photo 52.jpg" alt="Photo 52" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="52">
+              <div class="polaroid-album">
+                <img src="images/photo 53.jpg" alt="Photo 53" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="53">
+              <div class="polaroid-album">
+                <img src="images/photo 54.jpg" alt="Photo 54" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="54">
+              <div class="polaroid-album">
+                <img src="images/photo 55.jpg" alt="Photo 55" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="55">
+              <div class="polaroid-album">
+                <img src="images/photo 56.jpg" alt="Photo 56" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="56">
+              <div class="polaroid-album">
+                <img src="images/photo 57.jpg" alt="Photo 57" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="57">
+              <div class="polaroid-album">
+                <img src="images/photo 58.jpg" alt="Photo 58" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="58">
+              <div class="polaroid-album">
+                <img src="images/photo 59.jpg" alt="Photo 59" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="59">
+              <div class="polaroid-album">
+                <img src="images/photo 60.jpg" alt="Photo 60" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="60">
+              <div class="polaroid-album">
+                <img src="images/photo 61.jpg" alt="Photo 61" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="61">
+              <div class="polaroid-album">
+                <img src="images/photo 62.jpg" alt="Photo 62" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="62">
+              <div class="polaroid-album">
+                <img src="images/photo 63.jpg" alt="Photo 63" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="63">
+              <div class="polaroid-album">
+                <img src="images/photo 64.JPEG" alt="Photo 64" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+            <div class="album-card" data-index="64">
+              <div class="polaroid-album">
+                <img src="images/photo 65.jpg" alt="Photo 65" loading="lazy" />
+                <p class="polaroid-caption-album"></p>
+              </div>
+            </div>
+
+
+          </div><!-- /album-track -->
+
+          <!-- Pagination dots -->
+          <div class="album-dots" id="albumDots"></div>
+
+          <!-- Rose petals bg -->
+          <div class="album-petals" id="albumPetals"></div>
+
+        </div><!-- /album-wrapper -->
+
+
+      </div>
+    </section>
+
+    <!-- REASONS I LOVE YOU -->
+    </div><!-- /panel-album -->
+    <div id="panel-reasons" class="section-panel hidden">
+    <section class="section reasons-section" id="reasons">
+
+      <!-- Ambient floating petals -->
+      <div class="reasons-petals" id="reasonsPetals"></div>
+
+      <div class="reasons-stage">
+
+        <!-- Header -->
+        <div class="reasons-header">
+          <p class="section-sub">Always &amp; forever</p>
+          <h2 class="section-heading">10 Reasons I Love You</h2>
+          <div class="title-divider"><span class="divider-line"></span>❤️<span class="divider-line"></span></div>
+        </div>
+
+        <!-- Progress dots -->
+        <div class="reasons-dots" id="reasonsDots">
+          <span class="rdot rdot-active" data-i="0"></span>
+          <span class="rdot" data-i="1"></span>
+          <span class="rdot" data-i="2"></span>
+          <span class="rdot" data-i="3"></span>
+          <span class="rdot" data-i="4"></span>
+          <span class="rdot" data-i="5"></span>
+          <span class="rdot" data-i="6"></span>
+          <span class="rdot" data-i="7"></span>
+          <span class="rdot" data-i="8"></span>
+          <span class="rdot" data-i="9"></span>
+        </div>
+
+        <!-- Big interactive card (flip mechanic) -->
+        <div class="rcard-wrap" id="rcardWrap">
+          <div class="rcard" id="rcard">
+            <div class="rcard-front">
+              <span class="rcard-num-big" id="rcardNum">1</span>
+              <p class="rcard-hint">tap to reveal ♥</p>
+            </div>
+            <div class="rcard-back">
+              <span class="rcard-quote-mark">"</span>
+              <p class="rcard-text" id="rcardText"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nav arrows -->
+        <div class="reasons-nav">
+          <button class="rnav-btn" id="rprev" aria-label="Previous" disabled>‹</button>
+          <button class="rnav-btn" id="rnext" aria-label="Next">›</button>
+        </div>
+
+        <!-- Finish state (shows after all 10 revealed) -->
+        <div class="reasons-finish hidden" id="reasonsFinish">
+          <p class="reasons-finish-text">…and so much more. 💖</p>
+        </div>
+
+      </div>
+    </section>
+
+      <div class="panel-back-wrap" id="back-reasons"><button class="panel-back-btn" data-back="true">← Back to Menu</button></div>
+    <!-- LETTER -->
+    </div><!-- /panel-reasons -->
+    <div id="panel-letter" class="section-panel hidden">
+    <section class="section letter-section" id="letter">
+      <div class="petal petal-1">🌸</div>
+      <div class="petal petal-2">🌸</div>
+      <div class="petal petal-3">🌸</div>
+      <div class="petal petal-4">🌸</div>
+      <div class="container">
+        <div class="section-title">
+          <p class="section-sub">From my heart to yours</p>
+          <h2 class="section-heading">A Letter For You</h2>
+          <div class="title-divider"><span class="divider-line"></span>❤️<span class="divider-line"></span></div>
+        </div>
+        <div class="letter-card reveal">
+          <p class="letter-salutation">My dearest love,</p>
+          <div class="letter-body">
+            <p>A year ago, you sent me a friend request and I still smile whenever I think about it. After I accepted it, you messaged me saying, “Akala ko si tita,” 
+              because Vera was in my name, and you thought I was your aunt. I used to think that was really just a funny coincidence but I realize maybe it was 
+              your way of making the first move, of finding an excuse to start something with me. Maybe it was your little “love at first sight” moment, haha.</p>
+            <p>And here we are now, one year later.</p>
+            <p>I’m still amazed at how easily we got attached to each other, how quickly you became someone so important in my life. It feels like everything happened so naturally, like we were always meant to find our way to each other.</p>
+            <p>In this one year, we’ve made so many memories together. We’ve shared laughter, joy, and moments that I will always treasure. But not everything was perfect, we also had fights, misunderstandings, and silent battles that we went through even when we didn’t fully understand each other.</p>
+            <p>Still, despite everything, we are here. We chose to stay. We became each other’s comfort, someone to lean on when things get heavy, someone to come back to even after distance or silence.</p>
+            <p>And I just hope that even when we don’t always understand each other, we won’t give up on us. I hope we learn, grow, and choose each other again and again, even on the difficult days.</p>
+            <p>Happy 1st anniversary, my love. Thank you for staying. Thank you for choosing me. Here’s to more years of memories, growth, love, and us, stronger than ever.</p>
+          </div>
+          <p class="letter-closing">Forever yours, always 💖</p>
+        </div>
+
+        <!-- REPLY SECTION -->
+        <div class="reply-section reveal" id="replySection">
+          <div class="reply-divider">
+            <span class="divider-line"></span>💌<span class="divider-line"></span>
+          </div>
+          <p class="reply-prompt">Write her back, Aaron 🖊️</p>
+          <div class="reply-card">
+            <div class="reply-header">
+              <span class="reply-from">From: <strong>Aaron Ermino</strong></span>
+              <span class="reply-to">To: <strong>Vera Mae</strong></span>
+            </div>
+            <textarea id="replyMessage" class="reply-textarea" placeholder="Write your message here..." rows="7" maxlength="2000"></textarea>
+            <div class="reply-actions">
+              <span class="reply-charcount" id="replyCharCount">0 / 2000</span>
+              <button class="reply-send-btn" id="replySendBtn">
+                <span id="replySendLabel">Send 💌</span>
+              </button>
+            </div>
+          </div>
+          <div class="reply-success hidden" id="replySuccess">
+            <div class="reply-success-icon">💌</div>
+            <p class="reply-success-text">Sent!</p>
+            <p class="reply-success-sub">She will receive your message.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+      <div class="panel-back-wrap" id="back-letter"><button class="panel-back-btn" data-back="true">← Back to Menu</button></div>
+    <!-- FUTURE WITH YOU -->
+    </div><!-- /panel-letter -->
+    <div id="panel-future" class="section-panel hidden">
+    <section class="section future-section" id="future">
+      <div class="container">
+        <div class="section-title">
+          <p class="section-sub">Dreams I hold for us</p>
+          <h2 class="section-heading">A Future With You</h2>
+          <div class="title-divider"><span class="divider-line"></span>❤️<span class="divider-line"></span></div>
+        </div>
+        <div class="future-grid">
+          <div class="future-card reveal">
+            <span class="future-icon">✈️</span>
+            <h3 class="future-title">Adventures</h3>
+            <p class="future-desc">Dagat trips, nature escapes, food trips, and many more memories we’ll create together.</p>
+          </div>
+          <div class="future-card reveal">
+            <span class="future-icon">🏡</span>
+            <h3 class="future-title">A Home</h3>
+            <p class="future-desc">A cozy corner of the world that is ours filled with warmth, laughter, morning light, and the sound of us.</p>
+          </div>
+          <div class="future-card reveal">
+            <span class="future-icon">🌙</span>
+            <h3 class="future-title">A Lifetime</h3>
+            <p class="future-desc">Growing old beside you. Watching seasons change. Knowing that every chapter of my story has you in it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+      <div class="panel-back-wrap" id="back-future"><button class="panel-back-btn" data-back="true">← Back to Menu</button></div>
+    <!-- SURPRISE BUTTON -->
+    </div><!-- /panel-future -->
+  </div>
+
+  <!-- THANK YOU SCREEN OVERLAY -->
+  <div class="thankyou-overlay hidden" id="thankyouOverlay">
+    <div class="thankyou-bg"></div>
+    <div class="thankyou-card" id="thankyouCard">
+      <div class="thankyou-deco thankyou-deco1">💕</div>
+      <div class="thankyou-deco thankyou-deco2">🌸</div>
+      <div class="thankyou-icon">💌</div>
+      <h2 class="thankyou-heading">Before you continue...</h2>
+      <p class="thankyou-body">Thank you for all the laughs, the memories, and the love you've given me this past year. This little website is a collection of some of my favorite moments with you.</p>
+      <p class="thankyou-sig">Happy Anniversary, my love!</p>
+      <button class="thankyou-btn" id="thankyouContinueBtn">Continue</button>
+    </div>
+  </div>
+
+  <!-- COLLAGE SURPRISE OVERLAY — body-level so blur on mainSite works correctly -->
+  <div class="collage-overlay hidden" id="collageOverlay">
+    <div class="collage-overlay-bg"></div>
+    <div class="collage-inner">
+      <div class="collage-header">
+        <p class="collage-sub">every memory, every moment</p>
+        <h2 class="collage-title">Our Story ❤️</h2>
+      </div>
+      <div class="collage-grid" id="collageGrid"></div>
+      <button class="collage-close" id="collageClose">↩ Back to Menu</button>
+    </div>
+  </div>
+
+  <!-- VIDEO SURPRISE OVERLAY -->
+  <div class="video-overlay hidden" id="videoOverlay">
+    <button class="video-close" id="videoClose">✕</button>
+    <video class="surprise-video" id="surpriseVideo" playsinline controls>
+      <source src="videos/surprise.mp4" type="video/mp4" />
+    </video>
+  </div>
+
+  <!-- GRAIN TRANSITION OVERLAY -->
+  <div id="grainOverlay" class="grain-overlay"></div>
+
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
